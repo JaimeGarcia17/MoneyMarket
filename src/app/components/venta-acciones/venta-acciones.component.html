@@ -1,0 +1,115 @@
+<app-header></app-header>
+
+<mat-card>
+  <mat-card-title>
+    Vender acciones
+  </mat-card-title>
+
+  <mat-card-subtitle>
+    Vende las acciones de tu cartera
+  </mat-card-subtitle>
+
+  <form [formGroup]="formulario">
+    <mat-accordion>
+      <!-- Datos de venta -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Datos de venta
+          </mat-panel-title>
+          <mat-panel-description>
+            Introduce los datos de venta
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="datosVenta">
+          <div class="empresa">
+            <mat-form-field>
+              <mat-label>Empresa</mat-label>
+              <select
+                matNativeControl
+                formControlName="idAccion"
+                (ngModelChange)="onSelect($event)"
+                required
+              >
+                <option
+                  *ngFor="let empresa of listaEmpresas"
+                  [ngValue]="empresa"
+                  >{{ empresa.simbolo }}</option
+                >
+              </select>
+              <mat-icon matSuffix>home_work</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="fecha">
+            <mat-form-field>
+              <mat-label>Fecha de venta</mat-label>
+              <input matInput type="date" formControlName="fecha" required />
+              <mat-icon matSuffix>calendar_today</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="acciones">
+            <mat-form-field>
+              <mat-label>Número de acciones</mat-label>
+              <input
+                matInput
+                type="number"
+                [(value)]="numeroAcciones"
+                readonly
+                required
+              />
+              <mat-icon matSuffix>shopping_cart</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="precioCompra">
+            <mat-form-field>
+              <mat-label>Precio de compra</mat-label>
+              <input
+                matInput
+                type="number"
+                [(value)]="precioCompra"
+                readonly
+                required
+              />
+              <mat-icon matSuffix>timeline</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="precioActual">
+            <mat-form-field>
+              <mat-label>Precio actual</mat-label>
+              <input matInput type="number" [(value)]="precioActual" readonly />
+              <mat-icon matSuffix>watch_later</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="precioVenta">
+            <mat-form-field>
+              <mat-label>Precio de venta</mat-label>
+              <input
+                matInput
+                type="number"
+                [(value)]="precioVenta"
+                readonly
+                required
+              />
+              <mat-icon matSuffix>monetization_on</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="venderAcciones()">
+      Aceptar
+    </button>
+    <button mat-raised-button color="primary" routerLink="/cartera">
+      Cancelar
+    </button>
+  </mat-card-actions>
+</mat-card>

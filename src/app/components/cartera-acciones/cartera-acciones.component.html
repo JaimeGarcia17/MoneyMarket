@@ -1,0 +1,117 @@
+<div class="parent">
+  <div class="toolbar">
+    <app-header></app-header>
+    
+  </div>
+
+  <div class="actualizacion">
+    Ultima actualizacion: {{fecha | date:'dd-MM-yyyy | HH:mm:ss'}}
+  </div>
+
+  <div class="compraAcciones">
+    <button mat-raised-button color="primary" class="buttons" routerLink="/comprar">
+      <mat-icon>add_shopping_cart</mat-icon>
+      Comprar acciones
+    </button>
+  </div>
+
+  <div class="filtro">
+    <mat-form-field>
+        <mat-icon matSuffix>search</mat-icon>
+      <mat-label>Buscar en mi cartera</mat-label>
+      <input matInput (keyup)="applyFilter($event)" />
+    </mat-form-field>
+  </div>
+
+  <div class="ventaAcciones">
+    <button mat-raised-button color="primary" class="buttons" routerLink="/vender">
+      <mat-icon>remove_shopping_cart</mat-icon>
+      Vender acciones
+    </button>
+  </div>
+
+  <div class="tabla">
+    <mat-table #table [dataSource]="dataSource" matSort>
+      <!-- Nombre de la compañía-->
+      <ng-container matColumnDef="empresa">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          Empresa
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.empresa }} (<b>{{ element.simboloEmpresa }}</b>)
+        </mat-cell>
+      </ng-container>
+
+      <!-- Número de acciones-->
+      <ng-container matColumnDef="numeroAcciones">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          Acciones
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.numeroAcciones }} acciones
+        </mat-cell>
+      </ng-container>
+
+      <!-- Precio unitario de compra -->
+      <ng-container matColumnDef="precioCompra">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          Precio de compra
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.precioCompra }} €
+        </mat-cell>
+      </ng-container>
+
+      <!-- Precio unitario actual -->
+      <ng-container matColumnDef="precioActual">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          Precio actual
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          {{ element.precioActual }} €
+        </mat-cell>
+      </ng-container>
+
+      <!-- Rentabilidad -->
+      <ng-container matColumnDef="rentabilidad">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+          Rentabilidad
+        </mat-header-cell>
+        <mat-cell
+          [ngClass]="{
+            rentabilidadPositiva: colorRentabilidad(element.rentabilidad),
+            rentabilidadNegativa: !colorRentabilidad(element.rentabilidad)
+          }"
+          *matCellDef="let element"
+        >
+          {{ element.rentabilidad }} €
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div class="rentabilidad">
+    <p>La rentabilidad de tu cartera de acciones es de</p>
+
+    <button mat-raised-button color="primary">
+      <mat-icon>account_balance</mat-icon>
+      {{ rentabilidadTotal }} €
+    </button>
+  </div>
+
+  <div class="footer">
+    <div class="creditos">
+      <br />
+      &copy; Money Market - 2020
+      <br />
+      Diseño y Evaluación de Productos Interactivos
+      <br />
+      Jaime García González
+    </div>
+  </div>
+</div>

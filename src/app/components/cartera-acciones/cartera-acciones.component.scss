@@ -1,0 +1,79 @@
+@import "../../../styles.scss";
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 0.2fr repeat(4, 1fr) 0.26fr 1fr 0.4fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.actualizacion{
+  grid-area: 2 / 3 / 3 / 4;
+  text-align: center;
+  font-size: small;
+}
+
+.toolbar {
+  grid-area: 1 / 1 / 2 / 6;
+}
+.compraAcciones {
+  grid-area: 3 / 2 / 4 / 3;
+  text-align: center;
+}
+
+.filtro {
+  grid-area: 3 / 3 / 4 / 4;
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.ventaAcciones {
+  grid-area: 3 / 4 / 4 / 5;
+  text-align: center;
+}
+.tabla {
+  grid-area: 4 / 1 / 7 / 6;
+  table {
+    width: 100%;
+  }
+}
+.rentabilidad {
+  grid-area: 8 / 2 / 9 / 5;
+  text-align: center;
+  p {
+    text-align: center;
+    font-size: medium;
+    font-style: italic;
+  }
+  button {
+    width: 40%;
+    font-size: x-large;
+  }
+  button:hover {
+    background-color: $accent;
+  }
+}
+
+.footer {
+  grid-area: 10 / 1 / 11 / 6;
+  width: 100%;
+  background-color: $primary;
+  position: fixed;
+  bottom: 0;
+}
+
+.creditos {
+  grid-area: 10 / 3 / 11 / 4;
+  text-align: center;
+  color: white;
+}
+
+.rentabilidadPositiva {
+  color: green;
+}
+
+.rentabilidadNegativa {
+  color: red;
+}

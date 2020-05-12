@@ -1,0 +1,56 @@
+@import "../../../styles.scss";
+
+mat-card {
+  max-width: 70%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+mat-form-field {
+  width: 80%;
+}
+
+.datosEmpresa {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.2fr 1fr 0.2fr;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.nombreEmpresa {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.precioActual {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.precioApertura {
+  grid-area: 3 / 2 / 4 / 3;
+}
+.precioCierre {
+  grid-area: 3 / 4 / 4 / 5;
+}
+.precioMaximo {
+  grid-area: 5 / 2 / 6 / 3;
+}
+.precioMinimo {
+  grid-area: 5 / 4 / 6 / 5;
+}
+
+.datosCompra {
+  display: grid;
+  grid-template-columns: 0.2fr repeat(3, 1fr) 0.2fr;
+  grid-template-rows: 1fr 0.5fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.numeroAcciones {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.fechaCompra {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.importeTotal {
+  grid-area: 3 / 3 / 4 / 4;
+}

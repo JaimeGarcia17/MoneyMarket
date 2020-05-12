@@ -1,0 +1,59 @@
+<div class="parent">
+  <div class="logo">
+    <img
+    src="assets/logo.png"
+    alt="Money Market Logo"
+  />
+    <p>Tu cartera de acciones</p>
+  </div>
+
+  <div class="formulario">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Iniciar sesión</mat-card-title>
+        <mat-card-subtitle>
+          Introduce tus credenciales para acceder a la
+          plataforma</mat-card-subtitle
+        >
+      </mat-card-header>
+
+      <form [formGroup]="formulario" (ngSubmit)="iniciarSesion()">
+        <mat-card-content fxLayout="row">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Usuario"
+              formControlName="usuario"
+              required
+            />
+            <mat-icon matSuffix>alternate_email</mat-icon>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-content fxLayout="row">
+          <mat-form-field>
+            <input
+              matInput
+              id="inputPassword"
+              placeholder="Contraseña"
+              type="password"
+              formControlName="password"
+              required
+            />
+            <mat-icon matSuffix>lock</mat-icon>
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions class="input">
+          <button mat-stroked-button color="primary" class="button">
+            Accede a la plataforma
+          </button>
+        </mat-card-actions>
+      </form>
+    </mat-card>
+  </div>
+
+  <div class="eslogan">
+    Gestiona tus acciones sin moverte de casa
+  </div>
+</div>

@@ -1,0 +1,46 @@
+@import "../../../styles.scss";
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 0.5fr repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: $primary;
+  color: white;
+}
+
+.logo {
+  grid-area: 2 / 3 / 3 / 4;
+  text-align: center;
+  font-size: larger;
+  img{
+    max-width:40%
+  }
+}
+.formulario {
+  grid-area: 3 / 2 / 5 / 5;
+}
+.eslogan {
+  grid-area: 6 / 3 / 7 / 4;
+  text-align: center;
+  font-size: medium;
+  font-style: italic;
+}
+
+.input{
+  text-align: center;
+}
+
+mat-card {
+  min-width: 40%;
+  max-width: 50%;
+  margin: auto;
+}
+
+mat-form-field {
+  margin-left: 20%;
+  min-width: 60%;
+}

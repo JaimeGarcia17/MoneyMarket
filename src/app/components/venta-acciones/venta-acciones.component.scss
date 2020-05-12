@@ -1,0 +1,34 @@
+@import "../../../styles.scss";
+
+mat-card {
+  max-width: 70%;
+  margin: 2em auto;
+  text-align: center;
+}
+
+.datosVenta {
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.2fr 1fr 0.2fr;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.empresa {
+  grid-area: 1 / 2 / 2 / 3;
+}
+.fecha {
+  grid-area: 1 / 4 / 2 / 5;
+}
+.acciones {
+  grid-area: 3 / 2 / 4 / 3;
+}
+.precioCompra {
+  grid-area: 3 / 4 / 4 / 5;
+}
+.precioActual {
+  grid-area: 5 / 2 / 6 / 3;
+}
+.precioVenta {
+  grid-area: 5 / 4 / 6 / 5;
+}
