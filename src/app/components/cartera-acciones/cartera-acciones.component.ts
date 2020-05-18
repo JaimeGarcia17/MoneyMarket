@@ -4,24 +4,11 @@ import {
   MatTableDataSource,
   MatPaginator,
   MatSort,
-  MatTable,
   MatSnackBar,
 } from "@angular/material";
 import { CarteraService } from "src/app/services/CarteraService/cartera.service";
 import { FinnhubService } from "src/app/services/FinnhubService/finnhub.service";
-import { Empresa } from "src/app/models/empresa";
-import { timer } from 'rxjs';
-
-const DATA: Acciones[] = [
-  {
-    empresa: "Repsol",
-    simboloEmpresa: "REP.MC",
-    numeroAcciones: 200,
-    precioCompra: 13.5,
-    precioActual: 15,
-    rentabilidad: 1.5,
-  },
-];
+import { timer, Subscription } from "rxjs";
 
 @Component({
   selector: "app-cartera-acciones",
@@ -29,18 +16,15 @@ const DATA: Acciones[] = [
   styleUrls: ["./cartera-acciones.component.scss"],
 })
 export class CarteraAccionesComponent implements OnInit {
-
   dataSource = new MatTableDataSource();
-  carteraSubscribe: any;
-  cotizacionSubscribe: any;
-  rentabilidadTotal:number = 0;
+  carteraSubscribe: Subscription;
+  cotizacionSubscribe: Subscription;
+  rentabilidadTotal: number = 0;
   listaAcciones: Acciones[] = [];
   listaPrecio: any[] = [];
-  empresa = new Empresa();
-  crono:any;
-  tiempoRefresco = 600000
-  fecha:number
-
+  crono: Subscription;
+  tiempoRefresco = 300000;
+  fecha: number;
 
   displayedColumns: string[] = [
     "empresa",
@@ -56,49 +40,63 @@ export class CarteraAccionesComponent implements OnInit {
   constructor(
     private cartera: CarteraService,
     private finnhub: FinnhubService,
-    private message:MatSnackBar
+    private message: MatSnackBar
   ) {}
 
   ngOnInit() {
+    this.crono = timer(0, this.tiempoRefresco).subscribe((e) => {
+      this.rentabilidadTotal = 0;
+      this.carteraSubscribe = this.cartera.getCartera().subscribe(
+        (data) => {
+          for (let i = 0; i < data.length; i++) {
+            this.listaAcciones[i] = new Acciones();
+            this.cotizacionSubscribe = this.finnhub
+              .getCotizacion(data[i].simbolo)
+              .subscribe(
+                (data) => {
+                  this.listaAcciones[i].precioActual = +data.c.toFixed(2);
+                  this.listaAcciones[i].rentabilidad = +(
+                    this.listaAcciones[i].numeroAcciones *
+                    (this.listaAcciones[i].precioActual -
+                      this.listaAcciones[i].precioCompra)
+                  ).toFixed(2);
 
-    this.crono = timer(1000,this.tiempoRefresco).subscribe(
-      (e) => {
+                  this.rentabilidadTotal += +this.listaAcciones[
+                    i
+                  ].rentabilidad.toFixed(2);
+                },
+                (err) => {
+                  this.message.open(
+                    "Se ha excedido el límite de cuota, por favor prueba más tarde",
+                    "Aceptar",
+                    { duration: 3000 }
+                  );
+                  console.log(err);
+                }
+              );
+            this.listaAcciones[i].empresa = data[i].nombre;
+            this.listaAcciones[i].simboloEmpresa = data[i].simbolo;
+            this.listaAcciones[i].fecha = data[i].fecha;
+            this.listaAcciones[i].numeroAcciones = data[i].cantidad;
+            this.listaAcciones[i].precioCompra = +data[i].precioUnitario;
+          }
+          this.dataSource.data = this.listaAcciones;
+          this.fecha = Date.now();
+        },
 
-      
-      this.rentabilidadTotal = 0
-
-      this.carteraSubscribe = this.cartera.getCartera().subscribe((data) => {
-        for (let i = 0; i < data.length; i++) {
-          this.listaAcciones[i] = new Acciones();
-          this.empresa = this.finnhub.listaEmpresas.find(
-            (x) => x.simbolo === data[i].simbolo
+        (err) => {
+          this.message.open(
+            "No se ha podido recuperar tu cartera de acciones",
+            "Aceptar",
+            { duration: 3000 }
           );
-          this.cotizacionSubscribe = this.finnhub
-            .getCotizacion(data[i].simbolo)
-            .subscribe((data) => {
-              this.listaAcciones[i].precioActual = +data.c.toFixed(2);
-              this.listaAcciones[i].rentabilidad =
-                +(this.listaAcciones[i].numeroAcciones *
-                (this.listaAcciones[i].precioActual -
-                  this.listaAcciones[i].precioCompra)).toFixed(2);
-                  
-                  this.rentabilidadTotal += +this.listaAcciones[i].rentabilidad.toFixed(2);
-            });
-          this.listaAcciones[i].empresa = this.empresa.nombreEmpresa;
-          this.listaAcciones[i].simboloEmpresa = this.empresa.simbolo;
-          this.listaAcciones[i].numeroAcciones = data[i].cantidad;
-          this.listaAcciones[i].precioCompra = +data[i].precioUnitario.toFixed(2);
+          console.log(err);
         }
-        this.dataSource.data = this.listaAcciones;
-        this.fecha = Date.now()
-      });
-  
+      );
+      this.rentabilidadTotal = +this.rentabilidadTotal.toFixed(2);
       this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;  
-    }
-
-    )
-      
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(event: Event) {
@@ -106,12 +104,17 @@ export class CarteraAccionesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
   colorRentabilidad(value): boolean {
     if (value >= 0) {
       return true;
     } else {
       return false;
     }
+  }
+
+  ngOnDestroy() {
+    this.carteraSubscribe.unsubscribe();
+    this.cotizacionSubscribe.unsubscribe();
+    this.crono.unsubscribe();
   }
 }

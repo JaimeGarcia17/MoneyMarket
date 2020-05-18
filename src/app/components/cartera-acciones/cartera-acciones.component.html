@@ -1,15 +1,19 @@
 <div class="parent">
   <div class="toolbar">
     <app-header></app-header>
-    
   </div>
 
   <div class="actualizacion">
-    Ultima actualizacion: {{fecha | date:'dd-MM-yyyy | HH:mm:ss'}}
+    Última actualización: {{ fecha | date: "dd-MM-yyyy | HH:mm:ss" }}
   </div>
 
   <div class="compraAcciones">
-    <button mat-raised-button color="primary" class="buttons" routerLink="/comprar">
+    <button
+      mat-raised-button
+      color="primary"
+      class="buttons"
+      routerLink="/comprar"
+    >
       <mat-icon>add_shopping_cart</mat-icon>
       Comprar acciones
     </button>
@@ -17,14 +21,19 @@
 
   <div class="filtro">
     <mat-form-field>
-        <mat-icon matSuffix>search</mat-icon>
+      <mat-icon matSuffix>search</mat-icon>
       <mat-label>Buscar en mi cartera</mat-label>
       <input matInput (keyup)="applyFilter($event)" />
     </mat-form-field>
   </div>
 
   <div class="ventaAcciones">
-    <button mat-raised-button color="primary" class="buttons" routerLink="/vender">
+    <button
+      mat-raised-button
+      color="primary"
+      class="buttons"
+      routerLink="/vender"
+    >
       <mat-icon>remove_shopping_cart</mat-icon>
       Vender acciones
     </button>
@@ -38,7 +47,8 @@
           Empresa
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.empresa }} (<b>{{ element.simboloEmpresa }}</b>)
+          {{ element.empresa }} (<b>{{ element.simboloEmpresa }}</b
+          >)
         </mat-cell>
       </ng-container>
 
@@ -58,7 +68,10 @@
           Precio de compra
         </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          {{ element.precioCompra }} €
+          {{ element.precioCompra }} € (<b>{{
+            element.fecha | date: "dd-MM-yyyy"
+          }}</b
+          >)
         </mat-cell>
       </ng-container>
 
@@ -103,15 +116,6 @@
       {{ rentabilidadTotal }} €
     </button>
   </div>
-
-  <div class="footer">
-    <div class="creditos">
-      <br />
-      &copy; Money Market - 2020
-      <br />
-      Diseño y Evaluación de Productos Interactivos
-      <br />
-      Jaime García González
-    </div>
-  </div>
 </div>
+
+<app-footer></app-footer>

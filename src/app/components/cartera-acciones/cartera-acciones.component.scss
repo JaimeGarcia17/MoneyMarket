@@ -3,12 +3,12 @@
 .parent {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 1fr 0.2fr repeat(4, 1fr) 0.26fr 1fr 0.4fr 1fr;
+  grid-template-rows: 1fr 0.2fr repeat(4, 1fr) 0.2fr 1fr 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
 
-.actualizacion{
+.actualizacion {
   grid-area: 2 / 3 / 3 / 4;
   text-align: center;
   font-size: small;

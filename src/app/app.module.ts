@@ -17,6 +17,7 @@ import { FinnhubService } from './services/FinnhubService/finnhub.service';
 import { CarteraService } from './services/CarteraService/cartera.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HeaderComponent } from './components/header/header.component';
     CompraAccionesComponent,
     VentaAccionesComponent,
     HeaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

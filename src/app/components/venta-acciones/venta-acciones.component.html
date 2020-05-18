@@ -35,7 +35,7 @@
                 <option
                   *ngFor="let empresa of listaEmpresas"
                   [ngValue]="empresa"
-                  >{{ empresa.simbolo }}</option
+                  >{{ empresa.nombre }}</option
                 >
               </select>
               <mat-icon matSuffix>home_work</mat-icon>
@@ -92,8 +92,8 @@
               <input
                 matInput
                 type="number"
+                formControlName="precioVenta"
                 [(value)]="precioVenta"
-                readonly
                 required
               />
               <mat-icon matSuffix>monetization_on</mat-icon>
@@ -113,3 +113,5 @@
     </button>
   </mat-card-actions>
 </mat-card>
+
+<app-footer></app-footer>
